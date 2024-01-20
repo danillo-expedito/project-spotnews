@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    Página Inicial
+{% endblock %}
+
+{% block link %}
+    <li><a href="{% url 'home-page' %}">Home</a></li>
+{% endblock %}
+
+{% block content %}
+    <div>
+        {% for n in news %}
+            <div>
+                <h2 class="news-title">{{ n.title }}</h2>
+                <span class="news-date">{{ n.created_at|date:"d/m/Y" }}</span>
+                {% if n.image %}
+                <img src="/static/{{ n.image }}" alt="news image">
+                {% endif %}
+            </div>
+        {% empty %}
+            <p>Nenhuma notícia cadastrada</p>
+        {% endfor %}
+    </div>
+{% endblock %}
+```
