@@ -11,13 +11,15 @@
 {% block content %}
     <div>
         {% for n in news %}
-            <div>
-                <h2 class="news-title">{{ n.title }}</h2>
-                <span class="news-date">{{ n.created_at|date:"d/m/Y" }}</span>
-                {% if n.image %}
-                <img src="/static/{{ n.image }}" alt="news image">
-                {% endif %}
-            </div>
+            <a href="{% url 'news-details-page' n.id %}">
+                <div>
+                    <h2 class="news-title">{{ n.title }}</h2>
+                    <span class="news-date">{{ n.created_at|date:"d/m/Y" }}</span>
+                    {% if n.image %}
+                    <img src="/static/{{ n.image }}" alt="news image">
+                    {% endif %}
+                </div>
+            </a>
         {% empty %}
             <p>Nenhuma notícia cadastrada</p>
         {% endfor %}
