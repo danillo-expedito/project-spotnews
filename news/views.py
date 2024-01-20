@@ -1,6 +1,8 @@
 from django.shortcuts import render, redirect
 from news.models import News, Category
 from news.forms import CreateCategoryForm, CreateNewsForm
+from rest_framework import viewsets
+from news.serializers import CategorySerializer
 
 
 def index(request):
@@ -46,3 +48,8 @@ def news(request):
 
     context = {"form": form}
     return render(request, "news_form.html", context)
+
+
+class CategoryViewSet(viewsets.ModelViewSet):
+    queryset = Category.objects.all()
+    serializer_class = CategorySerializer
