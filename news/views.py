@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect
 from news.models import News, Category
-from news.forms import CreateCategoryForm
+from news.forms import CreateCategoryForm, CreateNewsForm
 
 
 def index(request):
@@ -24,3 +24,25 @@ def categories(request):
 
     context = {"form": form}
     return render(request, "categories_form.html", context)
+
+
+def news(request):
+    form = CreateNewsForm()
+
+    if request.method == "POST":
+        form = CreateNewsForm(request.POST, request.FILES)
+        if form.is_valid():
+            news_instance = News(
+                title=form.cleaned_data["title"],
+                content=form.cleaned_data["content"],
+                author=form.cleaned_data["author"],
+                created_at=form.cleaned_data["created_at"],
+                image=form.cleaned_data["image"],
+            )
+            news_instance.save()
+
+            news_instance.categories.set(form.cleaned_data["categories"])
+            return redirect("home-page")
+
+    context = {"form": form}
+    return render(request, "news_form.html", context)

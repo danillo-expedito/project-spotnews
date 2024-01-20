@@ -1,5 +1,5 @@
 from django.db import models
-from django.core.exceptions import ValidationError
+from news.validators import validate_min_two_words
 
 
 class Category(models.Model):
@@ -17,11 +17,6 @@ class User(models.Model):
 
     def __str__(self):
         return self.name
-
-
-def validate_min_two_words(value):
-    if len(value.split()) < 2:
-        raise ValidationError("O título deve conter pelo menos 2 palavras.")
 
 
 class News(models.Model):
